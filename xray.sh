@@ -1823,6 +1823,7 @@ menu() {
     echo -e " ${GREEN}17.${PLAIN} 查看Xray日志"
     echo " -------------"
     echo -e " ${GREEN}0.${PLAIN} 退出"
+    echo ""
     echo -n " 当前状态："
     statusText
     echo 
