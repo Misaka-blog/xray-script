@@ -30,7 +30,7 @@ SITES=(
 CONFIG_FILE="/usr/local/etc/xray/config.json"
 OS=`hostnamectl | grep -i system | cut -d: -f2`
 
-IP=$(curl -s6m8 ip.p3terx.com | sed -n 1p)
+IP=$(curl -s4m8 ip.p3terx.com | sed -n 1p)
 if [[ "$?" != "0" ]]; then
     IP=$(curl -s6m8 ip.p3terx.com | sed -n 1p)
 fi
