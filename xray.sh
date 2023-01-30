@@ -1796,10 +1796,11 @@ menu() {
     echo -e "# ${GREEN}作者${PLAIN}: MisakaNo の 小破站                                  #"
     echo -e "# ${GREEN}博客${PLAIN}: https://blog.misaka.rest                            #"
     echo -e "# ${GREEN}GitHub 项目${PLAIN}: https://github.com/Misaka-blog               #"
-    echo -e "# ${GREEN}Telegram 频道${PLAIN}: https://t.me/misaka_noc                    #"
-    echo -e "# ${GREEN}Telegram 群组${PLAIN}: https://t.me/misaka_noc_chat               #"
+    echo -e "# ${GREEN}Telegram 频道${PLAIN}: https://t.me/misakanocchannel              #"
+    echo -e "# ${GREEN}Telegram 群组${PLAIN}: https://t.me/misakanoc                     #"
     echo -e "# ${GREEN}YouTube 频道${PLAIN}: https://www.youtube.com/@misaka-blog        #"
     echo "#############################################################"
+    echo ""
     echo -e " ${GREEN}1.${PLAIN} 安装Xray-VMESS"
     echo -e " ${GREEN}2.${PLAIN} 安装Xray-${BLUE}VMESS+mKCP${PLAIN}"
     echo -e " ${GREEN}3.${PLAIN} 安装Xray-VMESS+TCP+TLS"
@@ -1826,7 +1827,7 @@ menu() {
     statusText
     echo 
 
-    read -p " 请选择操作[0-17]：" answer
+    read -p " 请选择操作 [0-17]：" answer
     case $answer in
         0)
             exit 0
