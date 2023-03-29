@@ -30,10 +30,16 @@ SITES=(
 CONFIG_FILE="/usr/local/etc/xray/config.json"
 OS=`hostnamectl | grep -i system | cut -d: -f2`
 
+systemctl stop warp-go >/dev/null 2>&1
+wg-quick down wgcf >/dev/null 2>&1
+
 IP=$(curl -s4m8 ip.p3terx.com | sed -n 1p)
 if [[ "$?" != "0" ]]; then
     IP=$(curl -s6m8 ip.p3terx.com | sed -n 1p)
 fi
+
+systemctl start warp-go >/dev/null 2>&1
+wg-quick up wgcf >/dev/null 2>&1
 
 BT="false"
 NGINX_CONF_PATH="/etc/nginx/conf.d/"
@@ -1792,10 +1798,11 @@ showLog() {
 menu() {
     clear
     echo "#############################################################"
-    echo -e "#                     ${RED}Xray一键安装脚本${PLAIN}                      #"
+    echo -e "#                    ${RED}Xray 一键安装脚本${PLAIN}                     #"
     echo -e "# ${GREEN}作者${PLAIN}: MisakaNo の 小破站                                  #"
     echo -e "# ${GREEN}博客${PLAIN}: https://blog.misaka.rest                            #"
     echo -e "# ${GREEN}GitHub 项目${PLAIN}: https://github.com/Misaka-blog               #"
+    echo -e "# ${GREEN}GitLab 项目${PLAIN}: https://gitlab.com/Misaka-blog               #"
     echo -e "# ${GREEN}Telegram 频道${PLAIN}: https://t.me/misakanocchannel              #"
     echo -e "# ${GREEN}Telegram 群组${PLAIN}: https://t.me/misakanoc                     #"
     echo -e "# ${GREEN}YouTube 频道${PLAIN}: https://www.youtube.com/@misaka-blog        #"
@@ -1823,12 +1830,11 @@ menu() {
     echo -e " ${GREEN}17.${PLAIN} 查看Xray日志"
     echo " -------------"
     echo -e " ${GREEN}0.${PLAIN} 退出"
-    echo ""
     echo -n " 当前状态："
     statusText
     echo 
 
-    read -p " 请选择操作 [0-17]：" answer
+    read -p " 请选择操作[0-17]：" answer
     case $answer in
         0)
             exit 0
@@ -1914,6 +1920,7 @@ checkSystem
 
 action=$1
 [[ -z $1 ]] && action=menu
+
 case "$action" in
     menu|update|uninstall|start|restart|stop|showInfo|showLog)
         ${action}
