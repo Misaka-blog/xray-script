@@ -560,6 +560,8 @@ getCert() {
         source ~/.bashrc
         ~/.acme.sh/acme.sh  --upgrade  --auto-upgrade
         ~/.acme.sh/acme.sh --set-default-ca --server letsencrypt
+        systemctl stop warp-go >/dev/null 2>&1
+        wg-quick down wgcf >/dev/null 2>&1
         if [[ "$BT" = "false" ]]; then
             if [[ -n $(echo $IP | grep ":") ]]; then
                 ~/.acme.sh/acme.sh   --issue -d $DOMAIN --keylength ec-256 --pre-hook "systemctl stop nginx" --post-hook "systemctl restart nginx" --standalone --listen-v6
@@ -573,6 +575,8 @@ getCert() {
                 ~/.acme.sh/acme.sh --issue -d $DOMAIN --keylength ec-256 --pre-hook "nginx -s stop || { echo -n ''; }" --post-hook "nginx -c /www/server/nginx/conf/nginx.conf || { echo -n ''; }" --standalone
             fi
         fi
+        systemctl start warp-go >/dev/null 2>&1
+        wg-quick up wgcf >/dev/null 2>&1
         [[ -f ~/.acme.sh/${DOMAIN}_ecc/ca.cer ]] || {
             colorEcho $RED " 获取证书失败，请复制上面的红色文字到 Github Issues 反馈"
             exit 1
